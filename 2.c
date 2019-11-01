@@ -2,7 +2,7 @@
 
 int printMyName2(void)
 {
-	printf("my name is [yongbeom]\n");
+	printf("my name is [HUH yongbeom]\n");
 	return 1;
 }
 
