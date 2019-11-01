@@ -1,6 +1,7 @@
+#include <stdio.h>
 #include "myProject.h"
 
-int printMyName2(void)
+int printMyname2(void)
 {
 	printf("my name is [Huh yongbeom]\n");
 	return 1;
