@@ -6,4 +6,5 @@ final.elf : main.c 1.o 2.o 3.o
 	gcc -c 2.c 
 3.o:3.c 
 	gcc -c 3.c
-
+clean:
+	rm final.elf 1.o 2.o 3.o
