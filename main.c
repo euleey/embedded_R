@@ -2,7 +2,7 @@
 #include "myProject.h"
 int main ()
 {
-	printf("Chief name is gaeul\n");
+	printf("Chief name is [jeonggaeul]\n");
 	printMyName1();
 	printMyName2();
 	printMyName3();
