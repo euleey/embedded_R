@@ -4,8 +4,8 @@ int main ()
 {
 	printf("Chief name is gaeul\n");
 	printMyName1();
-//	printMyName2();
-//	printMyName3();
+	printMyName2();
+	printMyName3();
 	return 0;
 }
 /*자유롭게 수정가능 c파일 main이랑 같이 잘 돌아가는지 확인하고싶은사람은
