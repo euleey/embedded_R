@@ -2,10 +2,10 @@
 CC=arm-linux-gnueabi-gcc
 AR=arm-linux-gnueabi-ar
 
-all: libMyBuzzerLib.a buzzer123.elf
+all: libMyBuzzerLib.a buzzer1234.elf
 
-buzzer123.elf: main.o libMyBuzzerLib.a buzzer.h
-	$(CC) main.o -o buzzer123.elf -lMyBuzzerLib -L. -l MyBuzzerLib
+buzzer1234.elf: main.o libMyBuzzerLib.a buzzer.h
+	$(CC) main.o -o buzzer1234.elf -lMyBuzzerLib -L. -l MyBuzzerLib
 
 libMyBuzzerLib.a: buzzer.o
 	$(AR) rc libMyBuzzerLib.a buzzer.o

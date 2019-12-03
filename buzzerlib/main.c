@@ -19,64 +19,83 @@ if (buzzerInit() == 0)
     }
 
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();    
     usleep(333333);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(333333);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
 
     buzzerPlaySong(2);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
     buzzerPlaySong(4);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(4);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(2);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
 
     buzzerPlaySong(4);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(4);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(2);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
 
     buzzerPlaySong(4);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(4);
+    usleep(200000);
     buzzerStopSong();
     usleep(500000);
     buzzerPlaySong(2);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
 
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);
     buzzerPlaySong(0);
+    usleep(200000);
     buzzerStopSong();
     usleep(700000);		
 
