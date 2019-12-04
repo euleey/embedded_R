@@ -7,7 +7,7 @@
 #include <pthread.h>
 #include <fcntl.h> // for O_RDWR
 #include <sys/ioctl.h> // for ioctl
-#include "textlcddrv.h"
+#include "textlcd.h"
 #include <ctype.h>
 #include <sys/ipc.h>
 #include <sys/types.h>
@@ -21,7 +21,8 @@ int main(int argc,char**argv)
 {
 
 	textlcdinit();
-	lcdtextwrite(hi,hi);
+	lcdtextwrite("1","hi");
+    lcdtextwrite("2","happy birthday!");
 	textlcdexit();
 	
 }
