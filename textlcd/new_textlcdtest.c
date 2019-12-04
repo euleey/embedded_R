@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/msg.h>
@@ -20,26 +19,9 @@
 
 int main(int argc,char**argv)
 {
-	unsigned int linenum=0;
-	stTextLCD stlcd;	//stTextLCD구조체를가지고드라이버와인터페이스
-	int fd;
-	int len;
-	memset(&stlcd,0,sizeof(stTextLCD));		//구조체초기화
-	
-	linenum = strtol(argv[1],NULL,10);
-	len=strlen(argv[2]);
-	
-	lineselect(linenum);
-	if(len>COLUMN_NUM)
-		memcpy(stlcd.TextData[stlcd.cmdData-1],argv[2],COLUMN_NUM);
-	else
-		memcpy(stlcd.TextData[stlcd.cmdData-1],argv[2],len);
-	memorycopy();
+
 	textlcdinit();
-	stlcd.cmd=CMD_WRITE_STRING;
-	textlcdinit();
-	lcdtextwrite();
+	lcdtextwrite(hi,hi);
 	textlcdexit();
 	
-	return 0;
 }
