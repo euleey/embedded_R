@@ -2,20 +2,15 @@
 CC=arm-linux-gnueabi-gcc
 AR=arm-linux-gnueabi-ar
 
-all: libMyLib.a piano.elf bitmaptest.elf
+all: libMyLib.a piano.elf 
 
-piano.elf: main.o libMyLib.a button.h buzzer.h led.h fnd.h textlcd.h
-	$(CC) main.o -o piano.elf -lMyLib -L. -lpthread
+piano.elf: main.c libMyLib.a 
+	$(CC) main.c -o piano.elf -lMyLib -L. -lpthread
 
 libMyLib.a: button.o buzzer.o led.o fnd.o textlcd.o libBitmap.o
 	$(AR) rc libMyLib.a button.o buzzer.o led.o fnd.o textlcd.o libBitmap.o
 
 libBitmap.o: libBitmap.h libBitmap.c bitmapFileHeader.h
-	$(CC) -O3 -o libBitmap.o -c libBitmap.c
-
-bitmaptest.elf: libMyLib.a bitmaptest.c
-	$(CC) -O3 bitmaptest.c -L. -l MyLib -o bitmaptest.elf 
-	
 button.o: button.c button.h
 buzzer.o: buzzer.c buzzer.h
 led.o: led.c led.h

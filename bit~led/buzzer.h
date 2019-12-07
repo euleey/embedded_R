@@ -5,5 +5,5 @@ int buzzerInit(void);
 int buzzerPlaySong(int scale);
 int buzzerStopSong(void);
 int buzzerExit(void);
-
+int Beep(void);
 #endif

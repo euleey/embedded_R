@@ -32,7 +32,7 @@ int probeButtonPath(char *newPath)
       //printf ("%s",tmpStr);
       if (strcmp(tmpStr,HAVE_TO_FIND_1) == 0)
       {
-         printf("YES! I found!: %s\r\n", tmpStr);
+         
          returnValue = 1;   //찾음
       }
       if (
@@ -41,9 +41,8 @@ int probeButtonPath(char *newPath)
                   //Event??을 찾았으면
          )
       {
-         printf ("-->%s",tmpStr);
-         printf("\t%c\r\n",tmpStr[strlen(tmpStr)-3]);
-         number = tmpStr[strlen(tmpStr)-3] - '0';   //Ascii character '0'-'9' (0x30-0x39) to interger(0)
+         
+         number = tmpStr[strlen(tmpStr)-3] - '0';  
          break;
       }
    }
@@ -58,14 +57,14 @@ int probeButtonPath(char *newPath)
 /*====================================================================================================================*/
 int buttonLibInit(void)
 {
-    printf("button_test START!\n");
+    printf("\n ===========< button_init >============ \n");
 	if ( probeButtonPath(inputDevPath) == 0)
    {
       printf ("ERROR! File Not Found!\r\n");
       printf ("Did you insmod?\r\n");
       return 0;
    }
-    printf ("inputDevPath: %s\r\n", inputDevPath);
+    printf ("--->inputDevPath: %s\r\n", inputDevPath);
     fd = open(inputDevPath, O_RDONLY);
     msgID = msgget (MESSAGE_ID, IPC_CREAT|0666);
     pthread_create(&buttonTh_id, NULL, &buttonThFunc, NULL);
@@ -75,7 +74,7 @@ int buttonLibExit(void)
 {
     pthread_cancel(buttonTh_id);
     close(fd);
-    printf("button_test finish!\n");
+    printf("===========< button_Exit >============\n");
 }
 static void* buttonThFunc()
 {

@@ -42,7 +42,7 @@ int findBuzzerSysPath()
 			}
 		}
 	}
-	printf("find %s\n",gBuzzerBaseSysDir);
+	printf("--->find %s\n",gBuzzerBaseSysDir);
 
 	return ifFound; 
 }
@@ -86,6 +86,13 @@ int buzzerPlaySong(int scale)
 }
 int buzzerStopSong(void)
 {
+	buzzerEnable(0);
+	return 0;
+}
+int Beep(void)
+{
+  buzzerEnable(1);
+    usleep(50000);
 	buzzerEnable(0);
 	return 0;
 }

@@ -218,7 +218,7 @@ void fb_close(void)
 {
 	printf ("Memory UnMapped!\r\n");
     munmap( pfbmap, PFBSIZE);
-	printf ("CloseFB\r\n");
+	printf ("CloseFB\r\n===============<bitmap_end>==================");
     close( fbfd);
 }
 void fb_write_reverse(char* picData, int picWidth, int picHeight)

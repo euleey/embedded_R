@@ -33,7 +33,7 @@ int lcdtextwrite(char *str1, char *str2)
 {
 unsigned int linenum = 0; 
     linenum = strtol(str1,NULL,10); 
-    printf("linenum :%d\n", linenum); 
+    
     if ( linenum == 1) stlcd.cmdData = CMD_DATA_WRITE_LINE_1; 
     else if ( linenum == 2) stlcd.cmdData = CMD_DATA_WRITE_LINE_2; 
     else { printf("linenum : %d wrong . range (1 ~ 2)\n", linenum); return 1; }
