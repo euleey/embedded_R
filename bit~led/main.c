@@ -77,7 +77,7 @@ void *buttonTheadFunc()
          {
             case KEY_VOLUMEUP:Beep();
             printf("\nVolume up key):\n");
-            if(ledvalue<=7) { ledOnOff(ledvalue,1); ledvalue++;  }
+            //if(ledvalue<=7) { ledOnOff(ledvalue,1); ledvalue++;  }
             break;
 
             case KEY_HOME:Beep();
@@ -103,7 +103,7 @@ void *buttonTheadFunc()
 
             case KEY_VOLUMEDOWN:Beep();  
             printf("\nVolume down key):\n");   
-            if(ledvalue>0) {  ledvalue--;  ledOnOff(ledvalue,0); }
+            //if(ledvalue>0) {  ledvalue--;  ledOnOff(ledvalue,0); }
             break;
          }
     }
@@ -115,8 +115,16 @@ void *AccelThreadFunc()
 		int a;//오른쪽으로 기울이면 +++ 왼쪽은 ---출력
 		a=AMG(0);
 		usleep(500000);
-	    	if(a<0) printf("\n---\n");
-		else if(a>0) printf("\n+++\n");
+	    	if(a<0)
+	       	{
+			printf("\n---\n");
+			if(ledvalue<=7) { ledOnOff(ledvalue,1); ledvalue++;  }
+		}
+		else if(a>0)
+	       	{
+			printf("\n+++\n");
+			if(ledvalue>0) {  ledvalue--;  ledOnOff(ledvalue,0); }
+		}
 	}
 	return 0;
 }
