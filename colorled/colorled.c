@@ -5,133 +5,123 @@
 #include <string.h>
 #include "colorled.h"
 
-static int fdR,fdG,fdB,fdPA,fdPI,fdPE,fdE;
+static int fdR,fdG,fdB; //DutyCycle set
+static int fdPR,fdPG,fdPB; //Active,Period set
+static int fdPIR,fdPIG,fdPIB; //inactive R,G,B
+static int fdER,fdEG,fdEB; //enable R,G,B
 
 int Colorledinit(void)
 {
-  fdPA = open ( COLOR_LED_DEV_R_ PWM_EXPORT, O_WRONLY);
-  fdPA = open ( COLOR_LED_DEV_G_ PWM_EXPORT, O_WRONLY);
-  fdPA = open ( COLOR_LED_DEV_G_ PWM_EXPORT, O_WRONLY); //pwm active
-   
-  fdPI = open ( COLOR_LED_DEV_R_ PWM_UNEXPORT, O_WRONLY);    
-  fdPI = open ( COLOR_LED_DEV_G_ PWM_UNEXPORT, O_WRONLY);
-  fdPI = open ( COLOR_LED_DEV_G_ PWM_UNEXPORT, O_WRONLY); //pwm inactive
+  fdPR = open ( COLOR_LED_DEV_R_ PWM_EXPORT, O_WRONLY);
+  fdPG = open ( COLOR_LED_DEV_G_ PWM_EXPORT, O_WRONLY);
+  fdPB = open ( COLOR_LED_DEV_B_ PWM_EXPORT, O_WRONLY); //pwm active
 
-  if(fdPA<0)
+  write(fdPR, &"0", 1); //pwm active 1
+  write(fdPG, &"0", 1); //pwm active 1
+  write(fdPB, &"0", 1); //pwm active 1
+
+    close(fdPR);
+    close(fdPG);
+    close(fdPB);
+
+  fdPR = open ( COLOR_LED_DEV_R_ PWM_PERIOD, O_WRONLY);
+  fdPG = open ( COLOR_LED_DEV_G_ PWM_PERIOD, O_WRONLY);
+  fdPB = open ( COLOR_LED_DEV_B_ PWM_PERIOD, O_WRONLY); //period initial
+    dprintf(fdPR, "%d", 1000); //period 1000
+    dprintf(fdPG, "%d", 1000); //period 1000
+    dprintf(fdPB, "%d", 1000); //period 1000
+
+  fdER = open ( COLOR_LED_DEV_R_ PWM_ENABLE, O_WRONLY);
+  fdEG = open ( COLOR_LED_DEV_G_ PWM_ENABLE, O_WRONLY);
+  fdEB = open ( COLOR_LED_DEV_B_ PWM_ENABLE, O_WRONLY); 
+    if(fdER<0)
     {
-    perror("pwm active open error/\n");
+    perror("Color R Enable open error/\n");
     return 1;
     }
-
-  fdPE = open ( COLOR_LED_DEV_R_ PWM_PERIOD, O_WRONLY);
-  fdPE = open ( COLOR_LED_DEV_G_ PWM_PERIOD, O_WRONLY);
-  fdPE = open ( COLOR_LED_DEV_B_ PWM_PERIOD, O_WRONLY); //period initial
-
-  if(fdPE<0)
+    if(fdEG<0)
     {
-    perror("Period open error/\n");
+    perror("Color G Enable open error/\n");
     return 1;
     }
+    if(fdEB<0)
+    {
+    perror("Color B Enable open error/\n");
+    return 1;
+    }
+  write(fdER, &"1", 1); //Red enable 1
+  write(fdEG, &"1", 1); //Green enable 1
+  write(fdEB, &"1", 1); //Blue enable 1
+}
+
+void Colorledwrite (int pwmindex, int percent)
+{
   fdR = open ( COLOR_LED_DEV_R_ PWM_DUTY, O_WRONLY);
   if(fdR<0)
     {
     perror("Color Red open error/\n");
-    return 1;
     }
   fdG = open ( COLOR_LED_DEV_G_ PWM_DUTY, O_WRONLY);
   if(fdG<0)
     {
     perror("Color Green open error/\n");
-    return 1;
     }
   fdB = open ( COLOR_LED_DEV_B_ PWM_DUTY, O_WRONLY); //duty cycle initial
     if(fdB<0)
     {
     perror("Color Blue open error/\n");
-    return 1;
-    }
-  fdE = open ( COLOR_LED_DEV_R_ PWM_ENABLE, O_WRONLY);
-  fdE = open ( COLOR_LED_DEV_G_ PWM_ENABLE, O_WRONLY);
-  fdE = open ( COLOR_LED_DEV_B_ PWM_ENABLE, O_WRONLY); 
-    if(fdE<0)
-    {
-    perror("Color Enable open error/\n");
-    return 1;
     }
 
-}
-
-void pwmActive(int active)
-{
-    if (active) write(fdPA, &"0", 1); //pwm active
-    else        write(fdPI, &"0", 1); 
-}
-void ColorledEnable(int bEnable)
-{
-	if ( bEnable)	write(fdE, &"1", 1);
-	else 			write(fdE, &"0", 1);
-}
-
-int Colorledwrite_1(void)
-{
-    pwmActive(1);
-    ColorledEnable(1);
-    setPeriod(1000); //period initial
-    
-    return 1;
-}
-
-void Colorledwrite (int pwmindex, int dutyCycle)
-{   
     if ((pwmindex < 0) || (pwmindex > 2))
     {
         printf ("Wrong range of pwmindex : %d\r\n",pwmindex);
     }
 
+    if ((percent <0) || (percent > 100))
+    { 
+        printf ("Wrong percent: %d\r\n",percent);
+    }
+
+    int duty = (1000- (percent*10));
     switch (pwmindex)
     {
-      case 2:
-	   dprintf(fdR, "%d", dutyCycle);
+      case 0:
+	   dprintf(fdR, "%d", duty);
       break;
       case 1:
-	   dprintf(fdG, "%d", dutyCycle);
+	   dprintf(fdG, "%d", duty);
       break;
-      case 0:
-	  dprintf(fdB, "%d", dutyCycle);
+      case 2:
+	  dprintf(fdB, "%d", duty);
       break;
     }
-}
 
-void setPeriod (int period)
-{
-     dprintf(fdPE, "%d", period);
 }
 
 int ColorledExit(void)
-{
- ColorledEnable(0);
- pwmActive(0);
- close(fdPI);
- close(fdPA);
- close(fdPE);
- close(fdR);
- close(fdG);
- close(fdB);
- close(fdE);
-}
+{ 
+  write(fdER, &"0", 1);
+  write(fdEG, &"0", 1);
+  write(fdEB, &"0", 1);
+    close(fdPR);
+    close(fdPG);
+    close(fdPB); //period 
 
+    close(fdR);
+    close(fdG);
+    close(fdB); //duty
 
-/*
-int pwmSetPercent(int percent, int ledColor) 
-{ if ((percent <0) || (percent > 100))
-{ printf ("Wrong percent: %d\r\n",percent);
-return 0;
-}int duty = (100- percent) * PWM_PERIOD_NS / 100;
-//LED Sinking. 
-Colorledwrite(duty, ledColor); 
-return 0;
+  fdPIR = open ( COLOR_LED_DEV_R_ PWM_UNEXPORT, O_WRONLY);    
+  fdPIG = open ( COLOR_LED_DEV_G_ PWM_UNEXPORT, O_WRONLY);
+  fdPIB = open ( COLOR_LED_DEV_B_ PWM_UNEXPORT, O_WRONLY); //pwm inactive
+  write(fdPIR, &"0", 1);
+  write(fdPIG, &"0", 1);
+  write(fdPIB, &"0", 1);
+
+  close(fdPIR);
+  close(fdPIG);
+  close(fdPIB);
 }
-*/
 
 
 

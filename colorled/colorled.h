@@ -15,11 +15,7 @@
 #define PWM_PERIOD_NS 1000000 //ns. = 1ms = 1khz 
 
 int Colorledinit(void);
-void pwmActive(int active);
-void ColorledEnable(int bEnable);
-int Colorledwrite_1(void);
-void Colorledwrite (int pwmindex, int dutyCycle);
-void setPeriod (int period);
+void Colorledwrite (int pwmindex, int percent);
 int ColorledExit(void);
 
 

@@ -2,10 +2,10 @@
 CC=arm-linux-gnueabi-gcc
 AR=arm-linux-gnueabi-ar
 
-all: libMycolorledLib.a colorled1.elf
+all: libMycolorledLib.a colorled.elf
 
-colorled1.elf: colorledtest.o libMycolorledLib.a colorled.h
-	$(CC) colorledtest.o -o colorled1.elf -lMycolorledLib -L. -l MycolorledLib
+colorled.elf: colorledtest.o libMycolorledLib.a colorled.h
+	$(CC) colorledtest.o -o colorled.elf -lMycolorledLib -L. -l MycolorledLib
 
 libMycolorledLib.a: colorled.o
 	$(AR) rc libMycolorledLib.a colorled.o

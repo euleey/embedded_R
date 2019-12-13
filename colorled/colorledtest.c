@@ -8,15 +8,14 @@
 int main (int argc , char **argv)
 {
     Colorledinit();
-    Colorledwrite_1();
-    Colorledwrite(0,200); //Blue
-    Colorledwrite(1,200); //Green
-    Colorledwrite(2,200); //Red
-    ColorledExit();
-   /* pwmSetPercent(atoi(argv[1]),0); 
-    pwmSetPercent(atoi(argv[2]),1); 
-    pwmSetPercent(atoi(argv[3]),2); */
 
+    Colorledwrite(0,10); //Red
+    sleep(3);
+    Colorledwrite(1,30); //Green
+    sleep(4);
+    Colorledwrite(2,50); //Blue
+    sleep(5);
+    ColorledExit();
 }
 
 
