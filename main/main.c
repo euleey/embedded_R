@@ -103,14 +103,18 @@ void guitar()
        print_bmp("./bmp/guitar.bmp"); 
        while(1)
    {
-		if((x>0)&&(x<1024)&&(y>0)&&(y<200))
-		{system("aplay ./wav/piano/25c.wav");}
-		
-		
-		
-		
-		
-		
+		if((x>0)&&(x<1024)&&(y>0)&&(y<100))
+		{system("aplay ./wav/guitar/low1.wav");}
+		else if((x>0)&&(x<1024)&&(y>100)&&(y<180))
+		{system("aplay ./wav/guitar/low2.wav");}
+		else if((x>0)&&(x<1024)&&(y>180)&&(y<260))
+		{system("aplay ./wav/guitar/low3.wav");}
+      	else if((x>0)&&(x<1024)&&(y>260)&&(y<340))
+		{system("aplay ./wav/guitar/low4.wav");}	
+		else if((x>0)&&(x<1024)&&(y>340)&&(y<420))
+		{system("aplay ./wav/guitar/low5.wav");}	
+		else if((x>0)&&(x<1024)&&(y>420)&&(y<520))
+		{system("aplay ./wav/guitar/lowbass.wav");}	
        }
 }
 void drum()
@@ -118,6 +122,23 @@ void drum()
 
    lcdtextwrite("1","====DRUM====    ");
    print_bmp("./bmp/drum.bmp");
+    while(1)
+   {
+	   if((x>0)&&(x<250)&&(y>330)&&(y<600))
+		{system("aplay ./wav/drum/ride_cymbal.wav");}
+		else if((x>250)&&(x<659)&&(y>330)&&(y<600))
+		{system("aplay ./wav/drum/tom_tom.wav");}
+		else if((x>659)&&(x<1024)&&(y>425)&&(y<600))
+		{system("aplay ./wav/drum/crash_cymbal.wav");}
+	   else if((x>659)&&(x<1024)&&(y>261)&&(y<425))
+		{system("aplay ./wav/drum/hi_hat.wav");}
+	    else if((x>659)&&(x<1024)&&(y>0)&&(y<261))
+		{system("aplay ./wav/drum/snare.wav");}
+	    else if((x>370)&&(x<659)&&(y>0)&&(y<261))
+		{system("aplay ./wav/drum/base.wav");}
+	       else if((x>0)&&(x<370)&&(y>0)&&(y<261))
+		{system("aplay ./wav/drum/floor_tom.wav");}
+	}
 }
 void set()
 {
