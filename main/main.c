@@ -175,6 +175,8 @@ void set()
    lcdtextwrite("1","Welcome MINIBand");
        lcdtextwrite("2","select button");
    print_bmp("./bmp/main.bmp");
+
+while(1);
 }
 void *buttonTheadFunc()
 {
