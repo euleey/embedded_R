@@ -6,6 +6,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <sys/kd.h> //touchscreen
+#include <sys/ioctl.h> //touchscreen
+
 #include "led.h"
 #include "buzzer.h"
 #include "button.h"
@@ -34,6 +37,11 @@ int main(void)
    msgID=buttonLibInit();
    buzzerInit();
    ledLibInit();
+    
+    int conFD = open ("/dev/tty0", O_RDWR); //touchscreen
+    ioctl(conFD, KDSETMODE, KD_GRAPHICS);
+    close (conFD);
+
     for(ledvalue=0;ledvalue<=3;ledvalue++)
         ledOnOff(ledvalue,1);//처음 볼륨은 4 초기화
    /*============init=====================*/
@@ -49,8 +57,8 @@ int main(void)
 		};
 
 
-    buttonLibExit();
-     ledLibExit();
+   buttonLibExit();
+   ledLibExit();
    buzzerExit();
    textlcdexit();
    return 1;
