@@ -14,6 +14,8 @@
 #include "libBitmap.h"
 #include "bitmapFileHeader.h"
 #include "AMG.h"
+#include "temp.h"
+
 static pthread_t buttonThread_ID;
 static pthread_t AccelThread_ID;
 static int msgID = 0;
