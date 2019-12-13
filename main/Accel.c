@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "AMG.h"
+#include "Accel.h"
 #define ACCELPATH "/sys/class/misc/FreescaleAccelerometer/"
 #define MAGNEPATH "/sys/class/misc/FreescaleMagnetometer/"
 #define GYROPATH "/sys/class/misc/FreescaleGyroscope/"
