@@ -86,8 +86,8 @@ static void* TouchThFunc()
         read(fd, &stEvent, sizeof (stEvent));
         if ( ( stEvent.type == EV_ABS))
            {
-		if(stEvent.code == EVENT_CODE_X)   	msgTx.xy = 1;
-		else if(stEvent.code == EVENT_CODE_X)	msgTx.xy = 2;
+		if(stEvent.code == EVENT_CODE_X)   	msgTx.messageNum = 1;
+		else if(stEvent.code == EVENT_CODE_Y)	msgTx.messageNum = 2;
            msgTx.value = stEvent.code;
            msgsnd(msgID, &msgTx, sizeof(int), 0);
            msgctl( msgID, IPC_RMID, 0);
