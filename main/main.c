@@ -20,14 +20,19 @@
 #include "temp.h"
 static pthread_t buttonThread_ID;
 static pthread_t AccelThread_ID;
+static pthread_t play_ID;
+static pthread_t test_ID;
 static int msgID = 0;
 static int ledvalue;
 void *buttonTheadFunc();
+void *playthFunc();
 void *AccelThreadFunc();
+void *testthFunc();
 void set();
 void piano();
 void guitar();
 void drum();
+int play;
 int x,y;
 int main(void)
 {
@@ -47,14 +52,9 @@ int main(void)
    /*============init=====================*/
    pthread_create(&buttonThread_ID, NULL, &buttonTheadFunc, NULL); //버튼 계속확인
    pthread_create(&AccelThread_ID,NULL,&AccelThreadFunc,NULL);
-    while(1){
-		x=50;y=50;usleep(200000);
-		x=150;y=50;usleep(200000);
-		x=250;y=50;usleep(200000);
-		x=350;y=50;usleep(200000);
-		x=450;y=50;usleep(200000);
-		x=550;y=50;usleep(200000);
-		};
+    pthread_create(&play_ID,NULL,&playthFunc,NULL);
+    pthread_create(&test_ID,NULL,&testthFunc,NULL);
+    while(1){}
 
 
    buttonLibExit();
@@ -63,11 +63,33 @@ int main(void)
    textlcdexit();
    return 1;
 }
+void *testthFunc()
+{
+    while(1){
+		x=50;y=50;//usleep(200000);
+		x=150;y=50;//usleep(200000);
+		x=250;y=50;//usleep(200000);
+		x=350;y=50;//usleep(200000);
+		x=450;y=50;//usleep(200000);
+		x=550;y=50;//usleep(200000);
+		};
+}
+void *playthFunc()
+{       
+        while(1)
+    {
+        switch(play){
+    case 0:      set();       break;
+    case 1:      piano();       break;
+    case 2:      guitar();       break;
+    case 3:      drum();       break;}
+    }
+}
 void piano()
 {
    lcdtextwrite("1","====PIANO====     ");
    print_bmp("./bmp/piano.bmp");
-   while(1)
+   while(play==1)
    {
 		if((x>0)&&(x<100)&&(y>0)&&(y<200))
 		{system("aplay ./wav/piano/25c.wav");}
@@ -109,7 +131,7 @@ void guitar()
 {
    lcdtextwrite("1","====GUITAR====   ");
        print_bmp("./bmp/guitar.bmp"); 
-       while(1)
+       while(play==2)
    {
 		if((x>0)&&(x<1024)&&(y>0)&&(y<100))
 		{system("aplay ./wav/guitar/low1.wav");}
@@ -130,7 +152,7 @@ void drum()
 
    lcdtextwrite("1","====DRUM====    ");
    print_bmp("./bmp/drum.bmp");
-    while(1)
+    while(play==3)
    {
 	   if((x>0)&&(x<250)&&(y>330)&&(y<600))
 		{system("aplay ./wav/drum/ride_cymbal.wav");}
@@ -171,24 +193,24 @@ void *buttonTheadFunc()
             break;
 
             case KEY_HOME:Beep();
-            printf("\nHome key):\n");  
-            set();          
+            printf("\nHome key):\n"); 
+                   play=0;       
             break;
 
             case KEY_BACK:Beep();      
             printf("\nPIANO):\n"); 
-            piano();
+            play=1;
             break;
 
             case KEY_SEARCH:Beep();    
-            printf("\nGUITAR):\n"); 
-            guitar()   ;  
+            printf("\nGUITAR):\n");           
+            play=2;
             break;
 
           
             case KEY_MENU:Beep();      
             printf("\nDRUM):\n");     
-            drum();
+            play=3;
             break;
 
             case KEY_VOLUMEDOWN:Beep();  
@@ -207,12 +229,12 @@ void *AccelThreadFunc()
       usleep(500000);
           if(a<0)
              {
-         printf("\n---\n");
+        // printf("\n---\n");
          if(ledvalue<=7) { ledOnOff(ledvalue,1); ledvalue++;  }
       }
       else if(a>0)
              {
-         printf("\n+++\n");
+         //printf("\n+++\n");
          if(ledvalue>0) {  ledvalue--;  ledOnOff(ledvalue,0); }
       }
    switch(ledvalue){
