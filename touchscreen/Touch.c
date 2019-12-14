@@ -85,7 +85,7 @@ static void* TouchThFunc()
     {
         read(fd, &stEvent, sizeof (stEvent));
     if((stEvent.type==EV_ABS)&&(stEvent.code==EVENT_CODE_X||stEvent.code==EVENT_CODE_Y)){
-            printf("%s=%d\n",stEvent.code==EVENT_CODE_X ? "X" : "Y",stEvent.value);
+           // printf("%s=%d\n",stEvent.code==EVENT_CODE_X ? "X" : "Y",stEvent.value);
 
         //if ( ( stEvent.type == EV_ABS))
    //   {
@@ -93,14 +93,14 @@ static void* TouchThFunc()
      	{
         msgTx.messageNum = 1;
         msgTx.Xvalue = stEvent.value;
-        printf("\n %d",msgTx.Xvalue);
+       // printf("\n %d",msgTx.Xvalue);
         msgsnd(msgID, &msgTx,  sizeof(msgTx) - sizeof(long int), 0);
         }
 		else //if(stEvent.code == EVENT_CODE_Y)	
        {
         msgTx.messageNum = 2;
         msgTx.Yvalue = stEvent.value;
-        printf("\n %d",msgTx.Yvalue);
+      //  printf("\n %d",msgTx.Yvalue);
         msgsnd(msgID, &msgTx,  sizeof(msgTx) - sizeof(long int), 0);
     //    msgctl( msgID, IPC_RMID, 0);
 	   }
