@@ -21,7 +21,7 @@
 
 static pthread_t buttonThread_ID;
 static pthread_t AccelThread_ID;
-static pthread_t play_ID;
+static pthread_t state_ID;
 static pthread_t test_ID;
 static pthread_t playid[4];
 static int msgID = 0;
@@ -38,6 +38,10 @@ void *guitar();
 void *drum();
 int play;
 int x,y;
+int state;
+int check;
+void *statethFunc();
+
 int main(void)
 {   
         set();
@@ -58,8 +62,9 @@ int main(void)
     pthread_create(&buttonThread_ID, NULL, &buttonTheadFunc, NULL); //버튼 계속확인
     pthread_create(&AccelThread_ID,NULL,&AccelThreadFunc,NULL);
     pthread_create(&test_ID,NULL,&testthFunc,NULL);
+    pthread_create(&state_ID,NULL,&statethFunc,NULL);
     while(1){}
-
+    pthread_join (state_ID, NULL);
     pthread_join (buttonThread_ID, NULL);
     pthread_join (AccelThread_ID, NULL);
     pthread_join (test_ID, NULL);
@@ -77,6 +82,7 @@ void *piano()
    lcdtextwrite("1","====PIANO====     ");
    print_bmp("./bmp/piano.bmp");
 
+           while(check==1){
 		if((x>0)&&(x<100)&&(y>0)&&(y<200))
 		{system("aplay ./wav/piano/25c.wav");}
 		else if((x>100)&&(x<200)&&(y>0)&&(y<200))
@@ -111,13 +117,15 @@ void *piano()
 		{system("aplay ./wav/piano/38_d.wav");}		
 		else if((x>890)&&(x<950)&&(y>200)&&(y<600))
 		{system("aplay ./wav/piano/40_e.wav");}		
+}
+       printf("피아노 종료 성공\n");  pthread_exit(NULL); 
 
 }
 void *guitar()
 {
    lcdtextwrite("1","====GUITAR====   ");
        print_bmp("./bmp/guitar.bmp"); 
-
+    while(check==2){
 		if((x>0)&&(x<1024)&&(y>0)&&(y<100))
 		{system("aplay ./wav/guitar/low1.wav");}
 		else if((x>0)&&(x<1024)&&(y>100)&&(y<180))
@@ -130,13 +138,14 @@ void *guitar()
 		{system("aplay ./wav/guitar/low5.wav");}	
 		else if((x>0)&&(x<1024)&&(y>420)&&(y<520))
 		{system("aplay ./wav/guitar/lowbass.wav");}	
-
+}
+       printf("기타 종료 성공\n");  pthread_exit(NULL); 
 }
 void *drum()
 {
    lcdtextwrite("1","====DRUM====    ");
    print_bmp("./bmp/drum.bmp");
-   
+while(check==3){
 	   if((x>0)&&(x<250)&&(y>330)&&(y<600))
 		{system("aplay ./wav/drum/ride_cymbal.wav");}
 		else if((x>250)&&(x<659)&&(y>330)&&(y<600))
@@ -151,12 +160,13 @@ void *drum()
 		{system("aplay ./wav/drum/base.wav");}
 	       else if((x>0)&&(x<370)&&(y>0)&&(y<261))
 		{system("aplay ./wav/drum/floor_tom.wav");}
-
+}
+       printf("드림 종료 성공\n");  pthread_exit(NULL); 
 }
 void *set()
 {
    lcdtextwrite("1","Welcome MINIBand");
-       lcdtextwrite("2","select button");
+   lcdtextwrite("2","select button");
    print_bmp("./bmp/main.bmp");
     //while(play==0){};
 }
@@ -178,23 +188,23 @@ void *buttonTheadFunc()
 
             case KEY_HOME:Beep();
             printf("\nHome key):\n"); 
-                   pthread_create(&playid[0],NULL,&set,NULL);   play=pthread_detach(playid[0]);    if(play==0) printf("분리완료\n");  
+                   pthread_create(&playid[0],NULL,&set,NULL);  check=0; play=pthread_detach(playid[0]);    if(play==0) printf("분리완료\n");  
             break;
 
             case KEY_BACK:Beep();      
             printf("\nPIANO):\n"); 
-             pthread_create(&playid[1],NULL,&piano,NULL);   pthread_detach(playid[1]); if(play==0) printf("분리완료\n");  
+             pthread_create(&playid[1],NULL,&piano,NULL); check=1;  pthread_detach(playid[1]); if(play==0) printf("분리완료\n");  
             break;
 
             case KEY_SEARCH:Beep();    
             printf("\nGUITAR):\n");           
-             pthread_create(&playid[2],NULL,&guitar,NULL);   pthread_detach(playid[2]); if(play==0) printf("분리완료\n");  
+             pthread_create(&playid[2],NULL,&guitar,NULL);  check=2;  pthread_detach(playid[2]); if(play==0) printf("분리완료\n");  
             break;
 
           
             case KEY_MENU:Beep();      
             printf("\nDRUM):\n");     
-            pthread_create(&playid[3],NULL,&drum,NULL);     pthread_detach(playid[3]); if(play==0) printf("분리완료\n");  
+            pthread_create(&playid[3],NULL,&drum,NULL); check=3;     pthread_detach(playid[3]); if(play==0) printf("분리완료\n");  
             break;
 
             case KEY_VOLUMEDOWN:Beep();  
@@ -236,30 +246,38 @@ case 8:      system("sudo amixer sset 'Speaker' 80%"); printf("volume: 80\n");br
    }
    return 0;
 }
-
+void *statethFunc()
+{
+    while(1)//터치가 현재 눌려있는 상태인지 확인하는 코드
+        {if(state==0){x=0;y=0;}
+              //printf("state : %d, x = %d y = %d\n",state,x,y);
+                usleep(10000);
+       }
+}
 void *testthFunc()
 {
-      int returnValue = 0;
+    int returnValue = 0;
     TOUCH_MSG_T msgRx;
   
    while(Messageclean != 1) //메세지비우기 
      {
+    
      returnValue = msgrcv(msgIDTouch, &msgRx, sizeof(msgRx) - sizeof(long int), 0, IPC_NOWAIT); 
      if (returnValue == -1) Messageclean = 1;
       }
 
    while(1){
-    returnValue = msgrcv(msgIDTouch, &msgRx, sizeof(msgRx) - sizeof(long int), 0, 0);
 
-    if(msgRx.messageNum==1)
-   { printf("\nx :%d \n",msgRx.Xvalue);
-                x=msgRx.Xvalue;}
-    else if(msgRx.messageNum == 2)
-   { printf("\ny :%d \n",msgRx.Yvalue);
-                 y=msgRx.Yvalue;}
-    else
-    printf("other");
-    usleep(10000);
+        returnValue = msgrcv(msgIDTouch, &msgRx, sizeof(msgRx) - sizeof(long int), 0, 0);
+        if(msgRx.messageNum==1)
+        { printf("\nx :%d \n",msgRx.Xvalue);
+                x=msgRx.Xvalue; state=1;}
+        else if(msgRx.messageNum == 2)
+        { printf("\ny :%d \n",msgRx.Yvalue);
+                 y=msgRx.Yvalue;state=1;}
+        else printf("other");
+        // printf("state : %d, x = %d y = %d\n",state,x,y);
+      state=0;   
      }
 }
 
