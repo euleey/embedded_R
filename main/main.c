@@ -8,7 +8,7 @@
 #include <dirent.h>
 #include <sys/kd.h> //touchscreen
 #include <sys/ioctl.h> //touchscreen
-
+#include "Touch.h"
 #include "led.h"
 #include "buzzer.h"
 #include "button.h"
@@ -18,11 +18,14 @@
 #include "bitmapFileHeader.h"
 #include "Accel.h"
 #include "temp.h"
+
 static pthread_t buttonThread_ID;
 static pthread_t AccelThread_ID;
 static pthread_t play_ID;
 static pthread_t test_ID;
 static int msgID = 0;
+static int msgIDTouch = 0;
+int Messageclean=0;
 static int ledvalue;
 void *buttonTheadFunc();
 void *playthFunc();
@@ -37,16 +40,18 @@ int x,y;
 int main(void)
 {
    set();
+
+    /*===========터치스크린 깨짐방지=====================*/
+    int conFD = open ("/dev/tty0", O_RDWR);
+    ioctl(conFD, KDSETMODE, KD_GRAPHICS);
+    close (conFD);
    /*============init=====================*/
    textlcdinit();
    msgID=buttonLibInit();
    buzzerInit();
    ledLibInit();
-    
-    int conFD = open ("/dev/tty0", O_RDWR); //touchscreen
-    ioctl(conFD, KDSETMODE, KD_GRAPHICS);
-    close (conFD);
-
+    msgIDTouch=TouchLibInit();
+   
     for(ledvalue=0;ledvalue<=3;ledvalue++)
         ledOnOff(ledvalue,1);//처음 볼륨은 4 초기화
    /*============init=====================*/
@@ -55,8 +60,7 @@ int main(void)
     pthread_create(&play_ID,NULL,&playthFunc,NULL);
     pthread_create(&test_ID,NULL,&testthFunc,NULL);
     while(1){}
-
-
+    TouchLibExit();
    buttonLibExit();
    ledLibExit();
    buzzerExit();
@@ -65,14 +69,28 @@ int main(void)
 }
 void *testthFunc()
 {
-    while(1){
-		x=50;y=50;//usleep(200000);
-		x=150;y=50;//usleep(200000);
-		x=250;y=50;//usleep(200000);
-		x=350;y=50;//usleep(200000);
-		x=450;y=50;//usleep(200000);
-		x=550;y=50;//usleep(200000);
-		};
+      int returnValue = 0;
+    TOUCH_MSG_T msgRx;
+  
+   while(Messageclean != 1) //메세지비우기 
+     {
+     returnValue = msgrcv(msgIDTouch, &msgRx, sizeof(msgRx) - sizeof(long int), 0, IPC_NOWAIT); 
+     if (returnValue == -1) Messageclean = 1;
+      }
+
+   while(1){
+    returnValue = msgrcv(msgIDTouch, &msgRx, sizeof(msgRx) - sizeof(long int), 0, 0);
+
+    if(msgRx.messageNum==1)
+   { printf("\nx :%d \n",msgRx.Xvalue);
+                x=msgRx.Xvalue;}
+    else if(msgRx.messageNum == 2)
+   { printf("\ny :%d \n",msgRx.Yvalue);
+                 y=msgRx.Yvalue;}
+    else
+    printf("other");
+    usleep(10000);
+     }
 }
 void *playthFunc()
 {       
@@ -82,7 +100,8 @@ void *playthFunc()
     case 0:      set();       break;
     case 1:      piano();       break;
     case 2:      guitar();       break;
-    case 3:      drum();       break;}
+    case 3:      drum();       break;
+}
     }
 }
 void piano()
@@ -149,7 +168,6 @@ void guitar()
 }
 void drum()
 {
-
    lcdtextwrite("1","====DRUM====    ");
    print_bmp("./bmp/drum.bmp");
     while(play==3)
@@ -167,7 +185,8 @@ void drum()
 	    else if((x>370)&&(x<659)&&(y>0)&&(y<261))
 		{system("aplay ./wav/drum/base.wav");}
 	       else if((x>0)&&(x<370)&&(y>0)&&(y<261))
-		{system("aplay ./wav/drum/floor_tom.wav");}
+		{system("aplay ./wav/drum/floor_tom.wav");
+}
 	}
 }
 void set()
@@ -175,8 +194,7 @@ void set()
    lcdtextwrite("1","Welcome MINIBand");
        lcdtextwrite("2","select button");
    print_bmp("./bmp/main.bmp");
-
-while(1);
+    //while(play==0){};
 }
 void *buttonTheadFunc()
 {
@@ -254,3 +272,4 @@ case 8:      system("sudo amixer sset 'Speaker' 80%"); printf("volume: 80\n");br
    }
    return 0;
 }
+

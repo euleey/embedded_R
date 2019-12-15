@@ -25,9 +25,9 @@ int print_bmp(char *path)
 	char *data;
 
 
-    printf("=================================\n");
-    printf("Frame buffer Application - Bitmap\n");
-    printf("=================================\n\n");
+  //  printf("=================================\n");
+   // printf("Frame buffer Application - Bitmap\n");
+   // printf("=================================\n\n");
 
 
 	//FrameBuffer init
@@ -46,9 +46,9 @@ int print_bmp(char *path)
 		printf ("File open failed\r\n");
 		return 0;
 	}
-    printf("\tBitmapFile: %dx%d pixels\n", cols, rows);
-    printf("\tFB Screen: %dx%d\n", screen_width, screen_height);
-    printf("\tFB bits_per_pixel: %d, FB line_length: %d\n", bits_per_pixel, line_length);
+   // printf("\tBitmapFile: %dx%d pixels\n", cols, rows);
+   // printf("\tFB Screen: %dx%d\n", screen_width, screen_height);
+   // printf("\tFB bits_per_pixel: %d, FB line_length: %d\n", bits_per_pixel, line_length);
 	
 	//FileWrite
 	fb_write(data, cols,rows);
@@ -218,7 +218,7 @@ void fb_close(void)
 {
 	printf ("Memory UnMapped!\r\n");
     munmap( pfbmap, PFBSIZE);
-	printf ("CloseFB\r\n===============<bitmap_end>==================");
+	//printf ("CloseFB\r\n===============<bitmap_end>==================");
     close( fbfd);
 }
 void fb_write_reverse(char* picData, int picWidth, int picHeight)
