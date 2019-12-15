@@ -88,39 +88,39 @@ void *piano()
 
            while(check==1){
        if((x>0)&&(x<100)&&(y>0)&&(y<200))
-		{aplay(1); Colorledwrite(0,5); Colorledwrite(1,0); Colorledwrite(2,0); }
+		{Colorledwrite(0,5); Colorledwrite(1,0); Colorledwrite(2,0); aplay(1);  }
 		else if((x>100)&&(x<200)&&(y>0)&&(y<200))
-		{aplay(2); Colorledwrite(0,10); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,10); Colorledwrite(1,0); Colorledwrite(2,0); aplay(2); }
 		else if((x>200)&&(x<300)&&(y>0)&&(y<200))
-		{aplay(3); Colorledwrite(0,15); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,15); Colorledwrite(1,0); Colorledwrite(2,0); aplay(3); }
 		else if((x>300)&&(x<400)&&(y>0)&&(y<200))
-		{aplay(4); Colorledwrite(0,20); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,20); Colorledwrite(1,0); Colorledwrite(2,0); aplay(4); }
 		else if((x>400)&&(x<500)&&(y>0)&&(y<200))
-		{aplay(5); Colorledwrite(0,25); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,25); Colorledwrite(1,0); Colorledwrite(2,0); aplay(5); }
 		else if((x>500)&&(x<600)&&(y>0)&&(y<200))
-		{aplay(6); Colorledwrite(0,30); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,30); Colorledwrite(1,0); Colorledwrite(2,0); aplay(6); }
 		else if((x>600)&&(x<700)&&(y>0)&&(y<200))
-		{aplay(7); Colorledwrite(0,35); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,35); Colorledwrite(1,0); Colorledwrite(2,0); aplay(7); }
 		else if((x>700)&&(x<800)&&(y>0)&&(y<200))
-		{aplay(8); Colorledwrite(0,40); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,40); Colorledwrite(1,0); Colorledwrite(2,0); aplay(8); }
 		else if((x>800)&&(x<900)&&(y>0)&&(y<200))
-		{aplay(9); Colorledwrite(0,45); Colorledwrite(1,0); Colorledwrite(2,0);}
+		{Colorledwrite(0,45); Colorledwrite(1,0); Colorledwrite(2,0); aplay(9); }
 		else if((x>900)&&(x<1000)&&(y>0)&&(y<200))
-		{aplay(10); Colorledwrite(0,50); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,50); Colorledwrite(1,0); Colorledwrite(2,0); aplay(10); }		
 		else if((x>60)&&(x<126)&&(y>200)&&(y<600))
-		{aplay(11); Colorledwrite(0,55); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,55); Colorledwrite(1,0); Colorledwrite(2,0); aplay(11); }		
 		else if((x>180)&&(x<245)&&(y>200)&&(y<600))
-		{aplay(12); Colorledwrite(0,60); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,60); Colorledwrite(1,0); Colorledwrite(2,0); aplay(12); }		
 		else if((x>370)&&(x<435)&&(y>200)&&(y<600))
-		{aplay(13); Colorledwrite(0,65); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,65); Colorledwrite(1,0); Colorledwrite(2,0); aplay(13); }		
 		else if((x>490)&&(x<545)&&(y>200)&&(y<600))
-		{aplay(14); Colorledwrite(0,70); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,70); Colorledwrite(1,0); Colorledwrite(2,0); aplay(14); }		
 		else if((x>600)&&(x<655)&&(y>200)&&(y<600))
-		{aplay(15); Colorledwrite(0,80); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,80); Colorledwrite(1,0); Colorledwrite(2,0); aplay(15); }		
 		else if((x>770)&&(x<825)&&(y>200)&&(y<600))
-		{aplay(16); Colorledwrite(0,90); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,90); Colorledwrite(1,0); Colorledwrite(2,0); aplay(16); }		
 		else if((x>890)&&(x<950)&&(y>200)&&(y<600))
-		{aplay(17); Colorledwrite(0,100); Colorledwrite(1,0); Colorledwrite(2,0);}		
+		{Colorledwrite(0,100); Colorledwrite(1,0); Colorledwrite(2,0); aplay(17); }		
 }
        printf("피아노 종료 성공\n");  pthread_exit(NULL); 
 
@@ -131,17 +131,17 @@ void *guitar()
        print_bmp("./bmp/guitar.bmp"); 
     while(check==2){
 if((x>0)&&(x<1024)&&(y>0)&&(y<100))
-		{system("aplay ./wav/guitar/low1.wav"); Colorledwrite(0,0); Colorledwrite(1,20); Colorledwrite(2,0); }
+		{Colorledwrite(0,0); Colorledwrite(1,20); Colorledwrite(2,0); system("aplay ./wav/guitar/low1.wav");  }
 		else if((x>0)&&(x<1024)&&(y>100)&&(y<180))
-		{system("aplay ./wav/guitar/low2.wav"); Colorledwrite(0,0); Colorledwrite(1,35); Colorledwrite(2,0);}
+		{Colorledwrite(0,0); Colorledwrite(1,35); Colorledwrite(2,0); system("aplay ./wav/guitar/low2.wav"); }
 		else if((x>0)&&(x<1024)&&(y>180)&&(y<260))
-		{system("aplay ./wav/guitar/low3.wav"); Colorledwrite(0,0); Colorledwrite(1,50); Colorledwrite(2,0);}
+		{Colorledwrite(0,0); Colorledwrite(1,50); Colorledwrite(2,0); system("aplay ./wav/guitar/low3.wav"); }
       	else if((x>0)&&(x<1024)&&(y>260)&&(y<340))
-		{system("aplay ./wav/guitar/low4.wav"); Colorledwrite(0,0); Colorledwrite(1,65); Colorledwrite(2,0);}	
+		{Colorledwrite(0,0); Colorledwrite(1,65); Colorledwrite(2,0); system("aplay ./wav/guitar/low4.wav"); }	
 		else if((x>0)&&(x<1024)&&(y>340)&&(y<420))
-		{system("aplay ./wav/guitar/low5.wav"); Colorledwrite(0,0); Colorledwrite(1,80); Colorledwrite(2,0);}	
+		{Colorledwrite(0,0); Colorledwrite(1,80); Colorledwrite(2,0); system("aplay ./wav/guitar/low5.wav"); }	
 		else if((x>0)&&(x<1024)&&(y>420)&&(y<520))
-		{system("aplay ./wav/guitar/lowbass.wav"); Colorledwrite(0,0); Colorledwrite(1,100); Colorledwrite(2,0);}	
+		{Colorledwrite(0,0); Colorledwrite(1,100); Colorledwrite(2,0); system("aplay ./wav/guitar/lowbass.wav"); }	
 }
        printf("기타 종료 성공\n");  pthread_exit(NULL); 
 }
@@ -151,19 +151,19 @@ void *drum()
    print_bmp("./bmp/drum.bmp");
 while(check==3){
 if((x>0)&&(x<250)&&(y>330)&&(y<600))
-		{system("aplay ./wav/drum/ride_cymbal.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,15);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,15); system("aplay ./wav/drum/ride_cymbal.wav"); }
 		else if((x>250)&&(x<659)&&(y>330)&&(y<600))
-		{system("aplay ./wav/drum/tom_tom.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,30);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,30); system("aplay ./wav/drum/tom_tom.wav"); }
 		else if((x>659)&&(x<1024)&&(y>425)&&(y<600))
-		{system("aplay ./wav/drum/crash_cymbal.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,45);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,45); system("aplay ./wav/drum/crash_cymbal.wav"); }
 	   else if((x>659)&&(x<1024)&&(y>261)&&(y<425))
-		{system("aplay ./wav/drum/hi_hat.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,60);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,60); system("aplay ./wav/drum/hi_hat.wav"); }
 	    else if((x>659)&&(x<1024)&&(y>0)&&(y<261))
-		{system("aplay ./wav/drum/snare.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,75);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,75); system("aplay ./wav/drum/snare.wav"); }
 	    else if((x>370)&&(x<659)&&(y>0)&&(y<261))
-		{system("aplay ./wav/drum/base.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,90);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,90); system("aplay ./wav/drum/base.wav"); }
 	       else if((x>0)&&(x<370)&&(y>0)&&(y<261))
-		{system("aplay ./wav/drum/floor_tom.wav"); Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,100);}
+		{Colorledwrite(0,0); Colorledwrite(1,0); Colorledwrite(2,100); system("aplay ./wav/drum/floor_tom.wav"); }
 }
        printf("드림 종료 성공\n");  pthread_exit(NULL); 
 }
