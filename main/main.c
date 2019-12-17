@@ -126,17 +126,17 @@ void *guitar()
     print_bmp("./bmp/guitar.bmp"); 
     while(check==2){
       if((x>0)&&(x<1024)&&(y>0)&&(y<100))
-      {system("aplay  -d 1 ./wav/guitar/low1.wav");}
+      {system("aplay  -d 1 ./wav/guitar/g1.wav");}
       else if((x>0)&&(x<1024)&&(y>100)&&(y<180))
-      {system("aplay -d 1  ./wav/guitar/low2.wav");}
+      {system("aplay -d 1  ./wav/guitar/g2.wav");}
       else if((x>0)&&(x<1024)&&(y>180)&&(y<260))
-      {system("aplay  -d 1 ./wav/guitar/low3.wav");}
+      {system("aplay  -d 1 ./wav/guitar/g3.wav");}
     else if((x>0)&&(x<1024)&&(y>260)&&(y<340))
-      {system("aplay -d 1  ./wav/guitar/low4.wav");}   
+      {system("aplay -d 1  ./wav/guitar/g4.wav");}   
       else if((x>0)&&(x<1024)&&(y>340)&&(y<420))
-      {system("aplay -d 1  ./wav/guitar/low5.wav");}   
+      {system("aplay -d 1  ./wav/guitar/g5.wav");}   
       else if((x>0)&&(x<1024)&&(y>420)&&(y<520))
-      {system("aplay -d 1  ./wav/guitar/lowbass.wav");}   
+      {system("aplay -d 1  ./wav/guitar/g6.wav");}   
         }
     printf("기타 종료 성공\n");  pthread_exit(NULL); 
 }
