@@ -91,8 +91,9 @@ int buzzerStopSong(void)
 }
 int Beep(void)
 {
+    setFrequency(500);
   buzzerEnable(1);
-    usleep(50000);
+    usleep(100000);
 	buzzerEnable(0);
 	return 0;
 }
