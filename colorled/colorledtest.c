@@ -9,11 +9,11 @@ int main (int argc , char **argv)
 {
     Colorledinit();
 
-    Colorledwrite(0,10); //Red
+    Colorledwrite(100,0,0); //Red
     sleep(3);
-    Colorledwrite(1,30); //Green
+    Colorledwrite(0,100,0); //Green
     sleep(4);
-    Colorledwrite(2,50); //Blue
+    Colorledwrite(0,0,100); //Blue
     sleep(5);
     ColorledExit();
 }

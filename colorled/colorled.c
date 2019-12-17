@@ -27,9 +27,13 @@ int Colorledinit(void)
   fdPR = open ( COLOR_LED_DEV_R_ PWM_PERIOD, O_WRONLY);
   fdPG = open ( COLOR_LED_DEV_G_ PWM_PERIOD, O_WRONLY);
   fdPB = open ( COLOR_LED_DEV_B_ PWM_PERIOD, O_WRONLY); //period initial
+
     dprintf(fdPR, "%d", 1000); //period 1000
     dprintf(fdPG, "%d", 1000); //period 1000
     dprintf(fdPB, "%d", 1000); //period 1000
+    close(fdPR);
+    close(fdPG);
+    close(fdPB); //period 
 
   fdER = open ( COLOR_LED_DEV_R_ PWM_ENABLE, O_WRONLY);
   fdEG = open ( COLOR_LED_DEV_G_ PWM_ENABLE, O_WRONLY);
@@ -52,11 +56,8 @@ int Colorledinit(void)
   write(fdER, &"1", 1); //Red enable 1
   write(fdEG, &"1", 1); //Green enable 1
   write(fdEB, &"1", 1); //Blue enable 1
-}
-
-void Colorledwrite (int pwmindex, int percent)
-{
-  fdR = open ( COLOR_LED_DEV_R_ PWM_DUTY, O_WRONLY);
+  
+    fdR = open ( COLOR_LED_DEV_R_ PWM_DUTY, O_WRONLY);
   if(fdR<0)
     {
     perror("Color Red open error/\n");
@@ -71,30 +72,20 @@ void Colorledwrite (int pwmindex, int percent)
     {
     perror("Color Blue open error/\n");
     }
+}
 
-    if ((pwmindex < 0) || (pwmindex > 2))
-    {
-        printf ("Wrong range of pwmindex : %d\r\n",pwmindex);
-    }
+void Colorledwrite (int R ,int G, int B)
+{
 
-    if ((percent <0) || (percent > 100))
-    { 
-        printf ("Wrong percent: %d\r\n",percent);
-    }
+	int duty1,duty2,duty3; 
+     duty1 = (1000- (R*10));
+     duty2 = (1000- (G*10));
+     duty3 = (1000- (B*10));
 
-    int duty = (1000- (percent*10));
-    switch (pwmindex)
-    {
-      case 0:
-	   dprintf(fdR, "%d", duty);
-      break;
-      case 1:
-	   dprintf(fdG, "%d", duty);
-      break;
-      case 2:
-	  dprintf(fdB, "%d", duty);
-      break;
-    }
+	   dprintf(fdR, "%d", duty1);
+	   dprintf(fdG, "%d", duty2);
+	  dprintf(fdB, "%d", duty3);
+
 
 }
 
@@ -103,9 +94,7 @@ int ColorledExit(void)
   write(fdER, &"0", 1);
   write(fdEG, &"0", 1);
   write(fdEB, &"0", 1);
-    close(fdPR);
-    close(fdPG);
-    close(fdPB); //period 
+
 
     close(fdR);
     close(fdG);
