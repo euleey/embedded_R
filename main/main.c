@@ -18,6 +18,7 @@
 #include "bitmapFileHeader.h"
 #include "Accel.h"
 #include "temp.h"
+#include "colorled.h"
 
 static pthread_t buttonThread_ID;
 static pthread_t AccelThread_ID;
@@ -56,7 +57,7 @@ int main(void)
    buzzerInit();
    ledLibInit();
     msgIDTouch=TouchLibInit();
-   
+   Colorledinit();
     for(ledvalue=0;ledvalue<=3;ledvalue++)
         ledOnOff(ledvalue,1);//처음 볼륨은 4 초기화
    /*============init=====================*/
@@ -74,6 +75,7 @@ int main(void)
     ledLibExit();
     buzzerExit();
     textlcdexit();
+ ColorledExit();
    return 1;
 }
 void *piano()
@@ -84,39 +86,39 @@ void *piano()
 
     while(check==1){
       if((x>0)&&(x<100)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/17e.wav");}
+      {system("aplay -d 1  ./wav/piano/17e.wav");Colorledwrite(100,0,100);}
       else if((x>100)&&(x<200)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/15d.wav");}
+      {system("aplay -d 1  ./wav/piano/15d.wav");Colorledwrite(90,0,100);}
       else if((x>200)&&(x<300)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/13c.wav");}
+      {system("aplay -d 1  ./wav/piano/13c.wav");Colorledwrite(80,0,100);}
       else if((x>300)&&(x<400)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/12b.wav");}
+      {system("aplay -d 1  ./wav/piano/12b.wav");Colorledwrite(70,0,100);}
       else if((x>400)&&(x<500)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/10a.wav");}
+      {system("aplay -d 1  ./wav/piano/10a.wav");Colorledwrite(60,0,100);}
       else if((x>500)&&(x<600)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/8g.wav");}
+      {system("aplay -d 1  ./wav/piano/8g.wav");Colorledwrite(50,0,100);}
       else if((x>600)&&(x<700)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/6f.wav");}
+      {system("aplay -d 1  ./wav/piano/6f.wav");Colorledwrite(40,0,100);}
       else if((x>700)&&(x<800)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/5e.wav");}
+      {system("aplay -d 1  ./wav/piano/5e.wav");Colorledwrite(30,0,0100);}
       else if((x>800)&&(x<900)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/3d.wav");}
+      {system("aplay -d 1  ./wav/piano/3d.wav");Colorledwrite(20,0,100);}
       else if((x>900)&&(x<1000)&&(y>0)&&(y<200))
-      {system("aplay -d 1  ./wav/piano/1c.wav");}      
+      {system("aplay -d 1  ./wav/piano/1c.wav");Colorledwrite(100,0,90);}      
       else if((x>60)&&(x<126)&&(y>200)&&(y<600))
-      {system("aplay -d 1  ./wav/piano/16_d.wav");}      
+      {system("aplay -d 1  ./wav/piano/16_d.wav");Colorledwrite(100,0,80);}      
       else if((x>180)&&(x<245)&&(y>200)&&(y<600))
-      {system("aplay -d 1  ./wav/piano/14_c.wav");}      
+      {system("aplay -d 1  ./wav/piano/14_c.wav");Colorledwrite(100,0,70);}      
       else if((x>370)&&(x<435)&&(y>200)&&(y<600))
-      {system("aplay  -d 1 ./wav/piano/11_a.wav");}      
+      {system("aplay  -d 1 ./wav/piano/11_a.wav");Colorledwrite(100,0,60);}      
       else if((x>490)&&(x<545)&&(y>200)&&(y<600))
-      {system("aplay -d 1  ./wav/piano/9_g.wav");}      
+      {system("aplay -d 1  ./wav/piano/9_g.wav");Colorledwrite(100,0,50);}      
       else if((x>600)&&(x<655)&&(y>200)&&(y<600))
-      {system("aplay -d 1  ./wav/piano/7_f.wav");}      
+      {system("aplay -d 1  ./wav/piano/7_f.wav");Colorledwrite(100,0,40);}      
       else if((x>770)&&(x<825)&&(y>200)&&(y<600))
-      {system("aplay  -d 1 ./wav/piano/4_d.wav");}      
+      {system("aplay  -d 1 ./wav/piano/4_d.wav");Colorledwrite(100,0,30);}      
       else if((x>890)&&(x<950)&&(y>200)&&(y<600))
-      {system("aplay -d 1  ./wav/piano/2_c.wav");}      
+      {system("aplay -d 1  ./wav/piano/2_c.wav");Colorledwrite(100,0,20);}      
 }
        printf("피아노 종료 성공\n");  pthread_exit(NULL); 
 
@@ -128,17 +130,17 @@ void *guitar()
     print_bmp("./bmp/guitar.bmp"); 
     while(check==2){
       if((x>0)&&(x<1024)&&(y>0)&&(y<100))
-      {system("aplay  -d 1 ./wav/guitar/g1.wav");}
+      {system("aplay  -d 1 ./wav/guitar/g1.wav");Colorledwrite(0,100,0);}
       else if((x>0)&&(x<1024)&&(y>100)&&(y<180))
-      {system("aplay -d 1  ./wav/guitar/g2.wav");}
+      {system("aplay -d 1  ./wav/guitar/g2.wav");Colorledwrite(0,100,20);}
       else if((x>0)&&(x<1024)&&(y>180)&&(y<260))
-      {system("aplay  -d 1 ./wav/guitar/g3.wav");}
+      {system("aplay  -d 1 ./wav/guitar/g3.wav");Colorledwrite(0,100,40);}
     else if((x>0)&&(x<1024)&&(y>260)&&(y<340))
-      {system("aplay -d 1  ./wav/guitar/g4.wav");}   
+      {system("aplay -d 1  ./wav/guitar/g4.wav");Colorledwrite(0,100,60);}   
       else if((x>0)&&(x<1024)&&(y>340)&&(y<420))
-      {system("aplay -d 1  ./wav/guitar/g5.wav");}   
+      {system("aplay -d 1  ./wav/guitar/g5.wav");Colorledwrite(0,100,80);}   
       else if((x>0)&&(x<1024)&&(y>420)&&(y<520))
-      {system("aplay -d 1  ./wav/guitar/g6.wav");}   
+      {system("aplay -d 1  ./wav/guitar/g6.wav");Colorledwrite(0,100,100);}   
         }
     printf("기타 종료 성공\n");  pthread_exit(NULL); 
 }
@@ -149,26 +151,26 @@ void *drum()
     print_bmp("./bmp/drum.bmp");
     while(check==3){
      if((x>0)&&(x<250)&&(y>330)&&(y<600))
-      {system("aplay -d 1 ./wav/drum/ride_cymbal.wav");}
+      {system("aplay -d 1 ./wav/drum/ride_cymbal.wav");Colorledwrite(100,100,30);}
       else if((x>250)&&(x<659)&&(y>330)&&(y<600))
-      {system("aplay -d 1 ./wav/drum/tom_tom.wav");}
+      {system("aplay -d 1 ./wav/drum/tom_tom.wav");Colorledwrite(100,100,0);}
       else if((x>659)&&(x<1024)&&(y>425)&&(y<600))
-      {system("aplay -d 1  ./wav/drum/crash_cymbal.wav");}
+      {system("aplay -d 1  ./wav/drum/crash_cymbal.wav");Colorledwrite(95,100,0);}
       else if((x>659)&&(x<1024)&&(y>261)&&(y<425))
-      {system("aplay -d 1  ./wav/drum/hi_hat.wav");}
+      {system("aplay -d 1  ./wav/drum/hi_hat.wav");Colorledwrite(80,100,0);}
      else if((x>659)&&(x<1024)&&(y>0)&&(y<261))
-      {system("aplay -d 1  ./wav/drum/snare.wav");}
+      {system("aplay -d 1  ./wav/drum/snare.wav");Colorledwrite(65,100,0);}
      else if((x>370)&&(x<659)&&(y>0)&&(y<261))
-      {system("aplay -d 1  ./wav/drum/base.wav");}
+      {system("aplay -d 1  ./wav/drum/base.wav");Colorledwrite(50,100,0);}
      else if((x>0)&&(x<371)&&(y>0)&&(y<261))
-      {system("aplay -d 1  ./wav/drum/floor_tom.wav");}
+      {system("aplay -d 1  ./wav/drum/floor_tom.wav");Colorledwrite(30,100,0);}
         }
     printf("드림 종료 성공\n");  pthread_exit(NULL); 
 }
 void *set()
 {
    lcdtextwrite("1","Welcome MINIBand");
-   lcdtextwrite("2","select button");
+   lcdtextwrite("2","select button     ");
    print_bmp("./bmp/main.bmp");
 }
 void *buttonTheadFunc()
@@ -183,30 +185,30 @@ void *buttonTheadFunc()
         if(returnValue<0) printf("fail_receive KEY\n");
      switch(msgRx.keyInput)
          {
-            case KEY_VOLUMEUP:Beep();
+            case KEY_VOLUMEUP:Beep();Colorledwrite(100,0,100);
             printf("\nVolume up key):\n");
            temperature = temp(); 
             printf("\n온도 : %d\n",temperature);
             fndDisp(temperature,0);
             break;
 
-            case KEY_HOME:Beep();
+            case KEY_HOME:Beep();Colorledwrite(100,100,100);
             printf("\nHome key):\n"); 
                    pthread_create(&playid[0],NULL,&set,NULL);  check=0; play=pthread_detach(playid[0]);    if(play==0) printf("분리완료\n");  
             break;
 
             case KEY_BACK:Beep();      
-            printf("\nPIANO):\n"); 
+            printf("\nPIANO):\n"); Colorledwrite(100,0,0);
              pthread_create(&playid[1],NULL,&piano,NULL); check=1;  pthread_detach(playid[1]); if(play==0) printf("분리완료\n");  
             break;
 
             case KEY_SEARCH:Beep();    
-            printf("\nGUITAR):\n");           
+            printf("\nGUITAR):\n");       Colorledwrite(0,100,0);    
              pthread_create(&playid[2],NULL,&guitar,NULL);  check=2;  pthread_detach(playid[2]); if(play==0) printf("분리완료\n");  
             break;
 
             case KEY_MENU:Beep();      
-            printf("\nDRUM):\n");     
+            printf("\nDRUM):\n");     Colorledwrite(0,0,100);
             pthread_create(&playid[3],NULL,&drum,NULL); check=3;     pthread_detach(playid[3]); if(play==0) printf("분리완료\n");  
             break;
 
