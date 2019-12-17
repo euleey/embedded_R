@@ -157,7 +157,7 @@ void *drum()
       {system("aplay -d 1  ./wav/drum/snare.wav");}
      else if((x>370)&&(x<659)&&(y>0)&&(y<261))
       {system("aplay -d 1  ./wav/drum/base.wav");}
-     else if((x>0)&&(x<370)&&(y>0)&&(y<261))
+     else if((x>0)&&(x<371)&&(y>0)&&(y<261))
       {system("aplay -d 1  ./wav/drum/floor_tom.wav");}
         }
     printf("드림 종료 성공\n");  pthread_exit(NULL); 
