@@ -79,6 +79,7 @@ int main(void)
 void *piano()
 {
    lcdtextwrite("1","====PIANO====     ");
+   lcdtextwrite("2","====Try Tip!====  ");
    print_bmp("./bmp/piano.bmp");
 
     while(check==1){
@@ -123,6 +124,7 @@ void *piano()
 void *guitar()
 {
     lcdtextwrite("1","====GUITAR====   ");
+    lcdtextwrite("2","Check temperature!");
     print_bmp("./bmp/guitar.bmp"); 
     while(check==2){
       if((x>0)&&(x<1024)&&(y>0)&&(y<100))
@@ -143,6 +145,7 @@ void *guitar()
 void *drum()
 {
     lcdtextwrite("1","====DRUM====    ");
+    lcdtextwrite("2","====Hit!====    ");
     print_bmp("./bmp/drum.bmp");
     while(check==3){
      if((x>0)&&(x<250)&&(y>330)&&(y<600))
@@ -171,6 +174,7 @@ void *set()
 void *buttonTheadFunc()
 {
     int returnValue = 0;
+    int temperature;
     BUTTON_MSG_T msgRx;
    printf("\n<-----------------inter_ButtonThread------------------->\n");
     while(1){    
@@ -181,7 +185,9 @@ void *buttonTheadFunc()
          {
             case KEY_VOLUMEUP:Beep();
             printf("\nVolume up key):\n");
-            //if(ledvalue<=7) { ledOnOff(ledvalue,1); ledvalue++;  }
+           temperature = temp(); 
+            printf("\n온도 : %d\n",temperature);
+            fndDisp(temperature,0);
             break;
 
             case KEY_HOME:Beep();
@@ -206,7 +212,7 @@ void *buttonTheadFunc()
 
             case KEY_VOLUMEDOWN:Beep();  
             printf("\nVolume down key):\n");   
-            //if(ledvalue>0) {  ledvalue--;  ledOnOff(ledvalue,0); }
+            
             break;
          }
     }
@@ -240,6 +246,7 @@ void *AccelThreadFunc()
     case 8:      system("sudo amixer sset 'Speaker' 80%"); printf("volume: 80\n");break;
     default: break;
       }
+      usleep(10000);
    }
    return 0;
 }
